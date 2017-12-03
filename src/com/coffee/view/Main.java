@@ -13,9 +13,12 @@ public class Main extends JFrame implements WindowListener {
     public Main(){
         super("Main");
         FileClass fileClass = new FileClass();
+
         fileClass.loadUserFromFile();
+        fileClass.loadOrderedFromFile();
 
         Delegator.getInstance().getUsers().stream().forEach(System.out::println);
+        Delegator.getInstance().getOrders().stream().forEach(System.out::println);
 
 
         Container contentPane = getContentPane();

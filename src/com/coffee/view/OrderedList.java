@@ -6,6 +6,7 @@ import com.coffee.dto.Ordered;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class OrderedList extends JFrame implements WindowListener, ActionListene
     JTable table;
     JScrollPane jScrollPane;
 
-    List<Ordered> myOrder;
+    ArrayList<Ordered> myOrder;
     Object rowData[][];
     String columnNames[] = {"Coffee", "Syrup", "Size", "Whipping", "Shot", "Count", "Total"};
 
@@ -36,10 +37,15 @@ public class OrderedList extends JFrame implements WindowListener, ActionListene
         contentPane.add(title);
 
         Delegator delegator = Delegator.getInstance();
-        myOrder = delegator.getOrders().stream()
-                .filter(
-                        user -> user.getUser().getId().equals(delegator.getCurrent_user().getId()))
-                .collect(Collectors.toList());
+
+
+        myOrder = new ArrayList<>();
+        for (int i=0; i<delegator.getOrders().size(); i++){
+            if(delegator.getOrders().get(i).getUser().getId().equals(delegator.getCurrent_user().getId())){
+                myOrder.add(delegator.getOrders().get(i));
+            }
+        }
+
 
         rowData = new Object[myOrder.size()][columnNames.length];
 

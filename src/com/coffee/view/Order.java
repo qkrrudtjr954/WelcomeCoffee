@@ -3,6 +3,7 @@ package com.coffee.view;
 import com.coffee.dao.Order.Insert;
 import com.coffee.delegator.Delegator;
 import com.coffee.dto.Coffee;
+import com.coffee.dto.Ordered;
 import com.coffee.file.FileClass;
 
 import javax.swing.*;
@@ -15,6 +16,7 @@ public class Order extends JFrame implements WindowListener, ActionListener, Ite
     Coffee coffees[];
 
     JButton order;
+    JButton list;
     JButton main;
     JButton menu;
 
@@ -133,22 +135,31 @@ public class Order extends JFrame implements WindowListener, ActionListener, Ite
         contentPane.add(count);
 
 
-        JPanel btnPanel = new JPanel();
-        btnPanel.setBounds(110, 500, 150, 50);
-        btnPanel.setLayout(new GridLayout(1, 2));
+        JPanel panel = new JPanel();
+        panel.setSize(150, 100);
+        panel.setLayout(new GridLayout(2,1));
+        panel.setLocation(100, 510);
 
         order = new JButton("ORDER");
-        order.setSize(75, 50);
         order.addActionListener(this);
-        btnPanel.add(order);
+        panel.add(order);
+
+
+        JPanel btnPanel = new JPanel();
+        btnPanel.setLayout(new GridLayout(1, 2));
+
+        list = new JButton("List");
+        list.addActionListener(this);
+        btnPanel.add(list);
 
 
         main = new JButton("MAIN");
-        main.setSize(75, 50);
         main.addActionListener(this);
         btnPanel.add(main);
 
-        contentPane.add(btnPanel);
+        panel.add(btnPanel);
+
+        contentPane.add(panel);
 
 
         //--------------------------------------------------
@@ -218,8 +229,11 @@ public class Order extends JFrame implements WindowListener, ActionListener, Ite
         }else if(obj == main){
             new Main();
             this.dispose();
-        }else{
+        }else if(obj == menu){
             new Menu();
+        }else{
+            new OrderedList();
+            this.dispose();
         }
     }
 

@@ -5,10 +5,12 @@ import com.coffee.delegator.Delegator;
 import com.coffee.dto.Coffee;
 import com.coffee.dto.Ordered;
 import com.coffee.dto.User;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class FileClass {
     private static File userFile;
@@ -25,7 +27,7 @@ public class FileClass {
             if (userFile.createNewFile() && coffeeFile.createNewFile() && orderFile.createNewFile()) {
                 System.out.println("FILE created");
             }else {
-                System.out.println("ERROR");
+                System.out.println("FILE exist");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -95,7 +97,64 @@ public class FileClass {
     public void loadOrderedFromFile(){
         if(orderFile != null){
             try{
-                BufferedReader br =
+                BufferedReader br = new BufferedReader(new FileReader(orderFile));
+                String str;
+                String temp[];
+
+                Ordered ordered;
+
+                Coffee coffee = null;
+                User user = null;
+                HashMap<String, Boolean> etc;
+
+                Delegator delegator = Delegator.getInstance();
+
+                while((str = br.readLine()) != null){
+                    temp = str.split("-");
+                    ordered = new Ordered();
+
+                    for (int i = 0; i < delegator.getCoffees().size(); i++){
+                        if(delegator.getCoffees().get(i).getName().equals(temp[0])){
+                            coffee = delegator.getCoffees().get(i);
+                            break;
+                        }
+                            
+                    }
+                    ordered.setCoffee(coffee);
+
+
+                    ordered.setSize(temp[1]);
+
+
+                    for (int i =0; i<delegator.getUsers().size(); i++){
+                        if(delegator.getUsers().get(i).getId().equals(temp[2])){
+                            user = delegator.getUsers().get(i);
+                            break;
+                        }
+                    }
+                    ordered.setUser(user);
+
+
+                    etc = new HashMap<>();
+                    etc.put("hazelnut", Boolean.parseBoolean(temp[3]));
+                    etc.put("caramel", Boolean.parseBoolean(temp[4]));
+                    etc.put("vanilla", Boolean.parseBoolean(temp[5]));
+
+                    etc.put("whipping", Boolean.parseBoolean(temp[6]));
+                    etc.put("shot", Boolean.parseBoolean(temp[7]));
+                    ordered.setEtc(etc);
+
+
+                    ordered.setCount(Integer.parseInt(temp[8]));
+                    System.out.println(ordered);
+
+
+                    delegator.getOrders().add(ordered);
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
 

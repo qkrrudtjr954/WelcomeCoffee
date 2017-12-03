@@ -17,6 +17,10 @@ public class Ordered {
     int count;
     String orderStr;
 
+    public Ordered(){
+
+    }
+
     public Ordered(User user, Coffee coffee, HashMap<String, Boolean> etc, String size, int count) {
         this.coffee = coffee;
         this.user = user;
@@ -83,6 +87,8 @@ public class Ordered {
         if(str.equals("")){
             str.append("no");
         }
+
+        System.out.println(str.toString());
 
         return str.toString();
     }

@@ -3,6 +3,7 @@ package com.coffee.view;
 import com.coffee.dao.Order.Insert;
 import com.coffee.delegator.Delegator;
 import com.coffee.dto.Coffee;
+import com.coffee.file.FileClass;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,13 +12,13 @@ import java.util.HashMap;
 
 public class Order extends JFrame implements WindowListener, ActionListener, ItemListener {
     JLabel label;
-    String coffees[];
+    Coffee coffees[];
 
     JButton order;
     JButton main;
     JButton menu;
 
-    JComboBox<String> coffeeList;
+    JComboBox<Coffee> coffeeList;
 
     JCheckBox vanilla;
     JCheckBox caramel;
@@ -56,10 +57,10 @@ public class Order extends JFrame implements WindowListener, ActionListener, Ite
 
 
         Delegator delegator = Delegator.getInstance();
-        coffees = new String[delegator.getCoffees().size()];
+        coffees = new Coffee[delegator.getCoffees().size()];
 
         for (int i=0; i<delegator.getCoffees().size(); i++){
-            coffees[i] = delegator.getCoffees().get(i).getName();
+            coffees[i] = delegator.getCoffees().get(i);
         }
 
         coffeeList = new JComboBox<>(coffees);
@@ -183,6 +184,7 @@ public class Order extends JFrame implements WindowListener, ActionListener, Ite
 
             Coffee coffee = (Coffee) coffeeList.getSelectedItem();
 
+
             String size;
             if(_short.isSelected()){
                 size = _short.getText();
@@ -205,6 +207,9 @@ public class Order extends JFrame implements WindowListener, ActionListener, Ite
 
             if(insertOrder.insert(coffee, size, count, etc)){
                 JOptionPane.showMessageDialog(null, "Order Complete");
+                FileClass fileClass = new FileClass();
+                fileClass.writeOrderedToFile();
+
                 new OrderedList();
                 this.dispose();
             }else{

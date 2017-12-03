@@ -8,6 +8,7 @@ import com.coffee.dto.User;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class FileClass {
     private static File userFile;
@@ -15,7 +16,7 @@ public class FileClass {
     private static File orderFile;
 
 
-    private FileClass(String filename) {
+    public FileClass() {
         userFile = new File("/Users/kyungseok_park/Desktop/Users.txt");
         coffeeFile = new File("/Users/kyungseok_park/Desktop/Coffees.txt");
         orderFile = new File("/Users/kyungseok_park/Desktop/Orders.txt");
@@ -42,7 +43,7 @@ public class FileClass {
                 PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(userFile)));
 
                 users.stream().forEach(user -> {
-                    pw.println(user.getId()+"-"+user.getPassword()+"-"+user.getName()+"-"+user.getAge());
+                    pw.println(user.getId()+"-"+new String(user.getPassword())+"-"+user.getName()+"-"+user.getAge());
                 });
                 pw.close();
 
@@ -81,7 +82,7 @@ public class FileClass {
                 PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(orderFile)));
 
                 ordereds.stream().forEach(order -> {
-                    pw.println();
+                    pw.println(order.getCoffee().getName()+"-"+order.getSize()+"-"+order.getUser().getId()+"-"+order.getEtc().get("hazelnut")+"-"+order.getEtc().get("caramel")+"-"+order.getEtc().get("vanilla")+"-"+order.getEtc().get("whipping")+"-"+order.getEtc().get("shot")+"-"+order.getCount());
                 });
                 pw.close();
 
@@ -91,25 +92,40 @@ public class FileClass {
         }
     }
 
-    public void loadFile(){
+    public void loadOrderedFromFile(){
+        if(orderFile != null){
+            try{
+                BufferedReader br =
+            }
+        }
 
-        if(file!=null){
+    }
+
+    public void loadUserFromFile(){
+
+        if(userFile!=null){
             try {
-                BufferedReader br = new BufferedReader(new FileReader(file));
-                String temp[];
-                String str = br.readLine();
+                BufferedReader br = new BufferedReader(new FileReader(userFile));
+                String temp[] = null;
+                String str;
                 User tempUser = null;
+                char[] password;
 
-                while((str != null)){
+                while((str = br.readLine()) != null){
                     temp = str.split("-");
 
                     tempUser = new User();
-                    tempUser.setNumber(Integer.parseInt(temp[0]));
-                    tempUser.setName(temp[1]);
-                    tempUser.setAge(Integer.parseInt(temp[2]));
+                    tempUser.setId(temp[0]);
+
+                    password = new char[temp[1].length()];
+                    for (int i=0; i<temp[1].length(); i++){
+                        password[i] = temp[1].charAt(i);
+                    }
+                    tempUser.setPassword(password);
+                    tempUser.setName(temp[2]);
+                    tempUser.setAge(Integer.parseInt(temp[3]));
 
                     Delegator.getInstance().getUsers().add(tempUser);
-                    str = br.readLine();
                 }
 
             } catch (FileNotFoundException e) {

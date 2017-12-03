@@ -1,6 +1,7 @@
 package com.coffee.view;
 
 import com.coffee.delegator.Delegator;
+import com.coffee.file.FileClass;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -10,7 +11,13 @@ import java.awt.event.*;
 public class Main extends JFrame implements WindowListener {
     JLabel label;
     public Main(){
-        super("");
+        super("Main");
+        FileClass fileClass = new FileClass();
+        fileClass.loadUserFromFile();
+
+        Delegator.getInstance().getUsers().stream().forEach(System.out::println);
+
+
         Container contentPane = getContentPane();
         contentPane.setBackground(Color.orange);
         contentPane.setLayout(null);

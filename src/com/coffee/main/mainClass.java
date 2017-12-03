@@ -18,7 +18,14 @@ public class mainClass {
         Delegator.getInstance().getUsers().add(user);
         Delegator.getInstance().getCoffees().add(coffee);
 
+
+        char[] ch = {'a','p','l','l','e'};
+        String str = new String(ch);
+        System.out.println(new String(str));
+        System.out.println(str);
+
         new Main();
+
     }
 
 }

@@ -2,6 +2,7 @@ package com.coffee.view;
 
 import com.coffee.dao.User.Insert;
 import com.coffee.dto.User;
+import com.coffee.file.FileClass;
 
 import javax.swing.*;
 import java.awt.*;
@@ -136,6 +137,8 @@ public class SignUp extends JFrame implements WindowListener, ActionListener {
             if(User.isCorrectPwd(password.getPassword(), pwdConfirm.getPassword())){
                 Insert userInsert = new Insert();
                 if(userInsert.insert(id.getText(), password.getPassword(), name.getText(), age.getText())){
+                    FileClass fileClass = new FileClass();
+                    fileClass.writeUserToFile();
                     new SignIn();
                 }else{
                     JOptionPane.showMessageDialog(null, "When Sign up, Problem Occurred");

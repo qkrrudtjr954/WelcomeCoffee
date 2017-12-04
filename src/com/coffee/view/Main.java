@@ -2,6 +2,7 @@ package com.coffee.view;
 
 import com.coffee.delegator.Delegator;
 import com.coffee.file.FileClass;
+import com.coffee.view.admin.AdminView;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -12,11 +13,6 @@ public class Main extends JFrame implements WindowListener {
     JLabel label;
     public Main(){
         super("Main");
-        FileClass fileClass = new FileClass();
-
-        fileClass.loadUserFromFile();
-        fileClass.loadOrderedFromFile();
-
 
         Container contentPane = getContentPane();
         contentPane.setBackground(Color.orange);
@@ -31,20 +27,36 @@ public class Main extends JFrame implements WindowListener {
         start.setBackground(Color.WHITE);
         start.setBorder(new LineBorder(Color.black, 2));
 
-        start.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Delegator delegator = Delegator.getInstance();
+        start.addActionListener((ActionEvent e) -> {
+            Delegator delegator = Delegator.getInstance();
 
-                if(delegator.getCurrent_user()!=null){
-                    new Order();
+            if(delegator.getCurrent_user()!=null){
+                if(delegator.getCurrent_user().getId().equals("admin")){
+                    new AdminView();
                 }else{
-                    new SignIn();
-                    JOptionPane.showMessageDialog(null, "Need to Sign In");
+                    new Order();
                 }
-                Main.super.dispose();
+            }else{
+                JOptionPane.showMessageDialog(new SignIn(), "Need to Sign In");
             }
+            Main.super.dispose();
         });
+
+        if (Delegator.getInstance().getCurrent_user()!=null){
+            JButton signOut = new JButton("SIGN OUT");
+            signOut.setBounds(129, 430, 100, 20);
+            signOut.setBackground(Color.WHITE);
+            signOut.setBorder(new LineBorder(Color.black, 2));
+
+            signOut.addActionListener((ActionEvent e) -> {
+                Delegator delegator = Delegator.getInstance();
+                delegator.setCurrent_user(null);
+
+                JOptionPane.showMessageDialog(new Main(), "Sign Out Successfully");
+            });
+            contentPane.add(signOut);
+        }
+
 
         contentPane.add(start);
 //
@@ -70,6 +82,7 @@ public class Main extends JFrame implements WindowListener {
 
 
         setBounds(100, 100, 375, 667);
+        setResizable(false);
         setVisible(true);
         addWindowListener(this);
     }

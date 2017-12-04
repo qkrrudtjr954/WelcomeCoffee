@@ -2,6 +2,7 @@ package com.coffee.view;
 
 import com.coffee.delegator.Delegator;
 import com.coffee.dto.User;
+import com.coffee.view.admin.AdminView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,11 +33,11 @@ public class SignIn extends JFrame implements WindowListener, ActionListener {
 
 
         JLabel idLabel = new JLabel("ID");
-        idLabel.setBounds(100, 128, 50, 20);
+        idLabel.setBounds(100, 170, 50, 20);
         contentPane.add(idLabel);
 
         id = new JTextField();
-        id.setBounds(100, 168, 150, 20);
+        id.setBounds(100, 210, 150, 20);
         contentPane.add(id);
 
         JLabel pwdLabel = new JLabel("PASSWORD");
@@ -82,21 +83,9 @@ public class SignIn extends JFrame implements WindowListener, ActionListener {
 
 
 
-        //--------------------------------------------------
-        label = new JLabel("---");
-        label.setBounds(0,0,100,30);
-        add(label);
-        contentPane.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int x = e.getX();
-                int y = e.getY();
-                label.setText("x: "+x+ "  y: "+y);
-            }
-        });
-        //--------------------------------------------------
 
         setBounds(100, 100, 375, 667);
+        setResizable(false);
         setVisible(true);
         addWindowListener(this);
     }
@@ -106,13 +95,16 @@ public class SignIn extends JFrame implements WindowListener, ActionListener {
         Object obj = e.getSource();
 
         if(obj == signIn){
-
             String id = this.id.getText();
             char[] password = this.password.getPassword();
 
             if(User.isUser(id, password)){
                 Delegator.getInstance().setCurrent_user(User.getUserById(id));
-                new Order();
+                if(id.equals("admin")){
+                    new AdminView();
+                }else{
+                    new Order();
+                }
                 this.dispose();
             }else{
                 JOptionPane.showMessageDialog(null, "Wrong ID or PASSWORD");

@@ -106,21 +106,8 @@ public class SignUp extends JFrame implements WindowListener, ActionListener {
 
 
 
-        //--------------------------------------------------
-        label = new JLabel("---");
-        label.setBounds(0,0,100,30);
-        add(label);
-        contentPane.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int x = e.getX();
-                int y = e.getY();
-                label.setText("x: "+x+ "  y: "+y);
-            }
-        });
-        //--------------------------------------------------
-
         setBounds(100, 100, 375, 667);
+        setResizable(false);
         setVisible(true);
         addWindowListener(this);
     }

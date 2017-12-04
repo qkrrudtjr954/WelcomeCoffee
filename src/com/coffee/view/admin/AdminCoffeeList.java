@@ -1,16 +1,16 @@
-package com.coffee.view;
+package com.coffee.view.admin;
 
 import com.coffee.delegator.Delegator;
-import com.coffee.dto.Ordered;
+import com.coffee.dto.Coffee;
+import com.coffee.dto.User;
+import com.coffee.view.Main;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
-import java.util.List;
 
-public class OrderedList extends JFrame implements WindowListener, ActionListener{
+public class AdminCoffeeList extends JFrame implements WindowListener, ActionListener{
 
 
     JLabel label;
@@ -18,55 +18,34 @@ public class OrderedList extends JFrame implements WindowListener, ActionListene
     JTable table;
     JScrollPane jScrollPane;
 
-    ArrayList<Ordered> myOrder;
     Object rowData[][];
-    String columnNames[] = {"Coffee", "Syrup", "Size", "Whipping", "Shot", "Count", "Total"};
+    String columnNames[] = {"Coffee", "Short", "Tall", "Grande", "Price Gap"};
 
-    JButton more;
+    JButton adminView;
     JButton main;
 
-    public OrderedList(){
+    public AdminCoffeeList(){
         super("List");
 
         Container contentPane = getContentPane();
         contentPane.setBackground(Color.orange);
         contentPane.setLayout(null);
 
-        JLabel title = new JLabel("<html><span style='color:white;'>ORDER LIST</span></html>");
+        JLabel title = new JLabel("<html><span style='color:white;'>COFFEE LIST</span></html>");
         title.setBounds(150, 68, 200, 20);
         contentPane.add(title);
 
         Delegator delegator = Delegator.getInstance();
+        ArrayList<Coffee> tempUser = delegator.getCoffees();
 
+        rowData = new Object[tempUser.size()][columnNames.length];
 
-        myOrder = new ArrayList<>();
-        for (int i=0; i<delegator.getOrders().size(); i++){
-            if(delegator.getOrders().get(i).getUser().getId().equals(delegator.getCurrent_user().getId())){
-                myOrder.add(delegator.getOrders().get(i));
-            }
-        }
-
-
-        rowData = new Object[myOrder.size()][columnNames.length];
-
-        for (int i=0; i < myOrder.size(); i++){
-            rowData[i][0] = myOrder.get(i).getCoffee().getName();
-            rowData[i][1] = myOrder.get(i).getSyrup();
-            rowData[i][2] = myOrder.get(i).getSize();
-            if(myOrder.get(i).getEtc().get("whipping")){
-                rowData[i][3] = "add";
-            }else{
-                rowData[i][3] = "no";
-            }
-
-            if(myOrder.get(i).getEtc().get("shot")){
-                rowData[i][4] = "add";
-            }else{
-                rowData[i][4] = "no";
-            }
-
-            rowData[i][5] = myOrder.get(i).getCount();
-            rowData[i][6] = myOrder.get(i).getTotalPrice();
+        for (int i = 0; i < tempUser.size(); i++){
+            rowData[i][0] = tempUser.get(i).getName();
+            rowData[i][1] = tempUser.get(i).getPrice();
+            rowData[i][2] = tempUser.get(i).getTall();
+            rowData[i][3] = tempUser.get(i).getGrande();
+            rowData[i][4] = tempUser.get(i).getPriceGap();
         }
 
         table = new JTable(rowData, columnNames);
@@ -81,10 +60,10 @@ public class OrderedList extends JFrame implements WindowListener, ActionListene
         btnPanel.setLayout(new GridLayout(1, 2));
 
 
-        more = new JButton("MORE");
-        more.setSize(75, 50);
-        more.addActionListener(this);
-        btnPanel.add(more);
+        adminView = new JButton("ADMIN");
+        adminView.setSize(75, 50);
+        adminView.addActionListener(this);
+        btnPanel.add(adminView);
 
 
         main = new JButton("MAIN");
@@ -94,6 +73,21 @@ public class OrderedList extends JFrame implements WindowListener, ActionListene
 
         contentPane.add(btnPanel);
 
+
+
+        //--------------------------------------------------
+        label = new JLabel("---");
+        label.setBounds(0,0,100,30);
+        add(label);
+        contentPane.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int x = e.getX();
+                int y = e.getY();
+                label.setText("x: "+x+ "  y: "+y);
+            }
+        });
+        //--------------------------------------------------
 
         setBounds(100, 100, 375, 667);
         setResizable(false);
@@ -105,8 +99,8 @@ public class OrderedList extends JFrame implements WindowListener, ActionListene
     public void actionPerformed(ActionEvent e) {
         Object obj = e.getSource();
 
-        if(obj == more){
-            new Order();
+        if(obj == adminView){
+            new AdminView();
         }else{
             new Main();
         }

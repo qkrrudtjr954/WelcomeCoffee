@@ -127,6 +127,7 @@ public class SignUp extends JFrame implements WindowListener, ActionListener {
                     FileClass fileClass = new FileClass();
                     fileClass.writeUserToFile();
                     new SignIn();
+                    this.dispose();
                 }else{
                     JOptionPane.showMessageDialog(null, "When Sign up, Problem Occurred");
                 }

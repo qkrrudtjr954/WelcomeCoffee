@@ -4,6 +4,8 @@ import com.coffee.delegator.Delegator;
 import com.coffee.dto.Coffee;
 import com.coffee.dto.User;
 import com.coffee.view.Main;
+import com.coffee.view.coffee.CoffeeAdd;
+import com.coffee.view.coffee.CoffeeDetail;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,6 +25,7 @@ public class AdminCoffeeList extends JFrame implements WindowListener, ActionLis
 
     JButton adminView;
     JButton main;
+    JButton add;
 
     public AdminCoffeeList(){
         super("List");
@@ -36,22 +39,47 @@ public class AdminCoffeeList extends JFrame implements WindowListener, ActionLis
         contentPane.add(title);
 
         Delegator delegator = Delegator.getInstance();
-        ArrayList<Coffee> tempUser = delegator.getCoffees();
+        ArrayList<Coffee> tempCoffee = delegator.getCoffees();
 
-        rowData = new Object[tempUser.size()][columnNames.length];
+        rowData = new Object[tempCoffee.size()][columnNames.length];
 
-        for (int i = 0; i < tempUser.size(); i++){
-            rowData[i][0] = tempUser.get(i).getName();
-            rowData[i][1] = tempUser.get(i).getPrice();
-            rowData[i][2] = tempUser.get(i).getTall();
-            rowData[i][3] = tempUser.get(i).getGrande();
-            rowData[i][4] = tempUser.get(i).getPriceGap();
+        for (int i = 0; i < tempCoffee.size(); i++){
+            rowData[i][0] = tempCoffee.get(i).getName();
+            rowData[i][1] = tempCoffee.get(i).getPrice();
+            rowData[i][2] = tempCoffee.get(i).getTall();
+            rowData[i][3] = tempCoffee.get(i).getGrande();
+            rowData[i][4] = tempCoffee.get(i).getPriceGap();
         }
 
         table = new JTable(rowData, columnNames);
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int index = table.getSelectedRow();
+                new CoffeeDetail(index);
+            }
+        });
         jScrollPane = new JScrollPane(table);
         jScrollPane.setBounds(0, 95, 375, 300);
         contentPane.add(jScrollPane);
+
+
+
+
+
+
+
+
+        JPanel panel = new JPanel();
+        panel.setSize(150, 100);
+        panel.setLayout(new GridLayout(2,1));
+        panel.setLocation(100, 450);
+
+
+        add = new JButton("ADD");
+        add.setSize(150, 50);
+        add.addActionListener(this);
+        panel.add(add);
 
 
         JPanel btnPanel = new JPanel();
@@ -71,7 +99,10 @@ public class AdminCoffeeList extends JFrame implements WindowListener, ActionLis
         main.addActionListener(this);
         btnPanel.add(main);
 
-        contentPane.add(btnPanel);
+        panel.add(btnPanel);
+
+        contentPane.add(panel);
+
 
 
 
@@ -101,8 +132,10 @@ public class AdminCoffeeList extends JFrame implements WindowListener, ActionLis
 
         if(obj == adminView){
             new AdminView();
-        }else{
+        }else if(obj == main){
             new Main();
+        }else{
+            new CoffeeAdd();
         }
         this.dispose();
     }

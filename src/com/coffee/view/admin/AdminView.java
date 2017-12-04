@@ -1,5 +1,6 @@
 package com.coffee.view.admin;
 
+import com.coffee.view.Main;
 import com.coffee.view.OrderedList;
 
 import javax.swing.*;
@@ -13,6 +14,7 @@ public class AdminView extends JFrame implements WindowListener{
     JButton orders;
     JButton coffees;
     JButton users;
+    JButton main;
 
     public AdminView(){
         super("");
@@ -26,7 +28,7 @@ public class AdminView extends JFrame implements WindowListener{
         contentPane.add(title);
 
         orders = new JButton("ORDERS");
-        orders.setBounds(100, 250, 175, 50);
+        orders.setBounds(100, 200, 175, 50);
         orders.addActionListener((ActionEvent e) -> {
             new AdminOrderedList();
             this.dispose();
@@ -34,7 +36,7 @@ public class AdminView extends JFrame implements WindowListener{
         contentPane.add(orders);
 
         coffees = new JButton("COFFEES");
-        coffees.setBounds(100, 320, 175, 50);
+        coffees.setBounds(100, 270, 175, 50);
         coffees.addActionListener((ActionEvent e) -> {
             new AdminCoffeeList();
             this.dispose();
@@ -42,12 +44,20 @@ public class AdminView extends JFrame implements WindowListener{
         contentPane.add(coffees);
 
         users = new JButton("USERS");
-        users.setBounds(100, 390, 175, 50);
+        users.setBounds(100, 340, 175, 50);
         users.addActionListener((ActionEvent e) -> {
             new AdminUserList();
             this.dispose();
         });
         contentPane.add(users);
+
+        main = new JButton("MAIN");
+        main.setBounds(100, 410, 175, 50);
+        main.addActionListener((ActionEvent e) -> {
+            new Main();
+            this.dispose();
+        });
+        contentPane.add(main);
 
 
 

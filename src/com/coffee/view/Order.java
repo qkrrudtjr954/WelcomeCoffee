@@ -195,8 +195,8 @@ public class Order extends JFrame implements WindowListener, ActionListener, Ite
 
             HashMap<String, Boolean> etc = new HashMap<>();
             etc.put("vanilla", this.vanilla.isSelected());
-            etc.put("hazelnut", this.vanilla.isSelected());
-            etc.put("caramel", this.vanilla.isSelected());
+            etc.put("hazelnut", this.hazelnut.isSelected());
+            etc.put("caramel", this.caramel.isSelected());
 
             etc.put("whipping", this.whipping.isSelected());
             etc.put("shot", this.shot.isSelected());
@@ -205,12 +205,11 @@ public class Order extends JFrame implements WindowListener, ActionListener, Ite
 
 
             if(insertOrder.insert(coffee, size, count, etc)){
-                JOptionPane.showMessageDialog(new List(), "Order Complete");
+                JOptionPane.showMessageDialog(new OrderedList(), "Order Complete");
                 FileClass fileClass = new FileClass();
                 fileClass.writeOrderedToFile();
-
-                new OrderedList();
                 this.dispose();
+
             }else{
                 JOptionPane.showMessageDialog(null, "Error");
             }

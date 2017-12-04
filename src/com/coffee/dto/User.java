@@ -92,6 +92,11 @@ public class User {
 
     @Override
     public String toString() {
-        return age + "-" + name + "-" + id + "-" + password;
+        return "User{" +
+                "age=" + age +
+                ", name='" + name + '\'' +
+                ", id='" + id + '\'' +
+                ", password=" + Arrays.toString(password) +
+                '}';
     }
 }

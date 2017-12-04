@@ -146,8 +146,6 @@ public class FileClass {
 
 
                     ordered.setCount(Integer.parseInt(temp[8]));
-                    System.out.println(ordered);
-
 
                     delegator.getOrders().add(ordered);
                 }

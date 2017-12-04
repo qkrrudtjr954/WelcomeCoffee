@@ -10,19 +10,22 @@ import com.coffee.view.SignUp;
 
 public class mainClass {
     public static void main(String[] args) {
-        Coffee coffee = new Coffee("test", 4800, 500);
+        Coffee coffee1 = new Coffee("Cafe Latte", 4800, 500);
+        Coffee coffee2 = new Coffee("Americano", 3000, 700);
+        Coffee coffee3 = new Coffee("Caramel Makiato", 4300, 300);
+        Coffee coffee4 = new Coffee("Hazel Nut", 4000, 500);
 
-        char[] pwd = {'1', '2', '1', '6'};
-        User user = new User(25, "park", "qkrrudtjr954", pwd );
+        char[] pwd = {'a','d','m','i','n'};
+        User user = new User(25, "admin", "admin", pwd );
 
         Delegator.getInstance().getUsers().add(user);
-        Delegator.getInstance().getCoffees().add(coffee);
+
+        Delegator.getInstance().getCoffees().add(coffee1);
+        Delegator.getInstance().getCoffees().add(coffee2);
+        Delegator.getInstance().getCoffees().add(coffee3);
+        Delegator.getInstance().getCoffees().add(coffee4);
 
 
-        char[] ch = {'a','p','l','l','e'};
-        String str = new String(ch);
-        System.out.println(new String(str));
-        System.out.println(str);
 
         new Main();
 

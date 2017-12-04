@@ -88,8 +88,6 @@ public class Ordered {
             str.append("no");
         }
 
-        System.out.println(str.toString());
-
         return str.toString();
     }
 

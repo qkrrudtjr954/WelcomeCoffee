@@ -1,7 +1,6 @@
 package com.coffee.view.admin;
 
 import com.coffee.view.Main;
-import com.coffee.view.OrderedList;
 
 import javax.swing.*;
 import java.awt.*;

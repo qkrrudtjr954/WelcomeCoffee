@@ -1,10 +1,11 @@
-package com.coffee.view;
+package com.coffee.view.order;
 
 import com.coffee.dao.Order.Insert;
 import com.coffee.delegator.Delegator;
 import com.coffee.dto.Coffee;
-import com.coffee.dto.Ordered;
 import com.coffee.file.FileClass;
+import com.coffee.view.Main;
+import com.coffee.view.Menu;
 
 import javax.swing.*;
 import java.awt.*;

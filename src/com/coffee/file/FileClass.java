@@ -64,7 +64,7 @@ public class FileClass {
                 PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(coffeeFile)));
 
                 coffees.stream().forEach(coffee -> {
-                    pw.println(coffee.getName()+"-"+coffee.getPrice()+"-"+coffee.getTall()+"-"+coffee.getGrande()+"-"+coffee.getPriceGap());
+                    pw.println(coffee.getName()+"-"+coffee.getPrice()+"-"+coffee.getPriceGap());
                 });
                 pw.close();
 
@@ -183,6 +183,34 @@ public class FileClass {
                     tempUser.setAge(Integer.parseInt(temp[3]));
 
                     Delegator.getInstance().getUsers().add(tempUser);
+                }
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void loadCoffeeFromFile(){
+
+        if(coffeeFile!=null){
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(coffeeFile));
+                String temp[] = null;
+                String str;
+                Coffee tempCoffee = null;
+
+                while((str = br.readLine()) != null){
+                    temp = str.split("-");
+
+                    tempCoffee = new Coffee();
+                    tempCoffee.setName(temp[0]);
+                    tempCoffee.setPrice(Integer.parseInt(temp[1]));
+                    tempCoffee.setPriceGap(Integer.parseInt(temp[2]));
+
+                    Delegator.getInstance().getCoffees().add(tempCoffee);
                 }
 
             } catch (FileNotFoundException e) {

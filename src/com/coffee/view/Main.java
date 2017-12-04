@@ -1,8 +1,8 @@
 package com.coffee.view;
 
 import com.coffee.delegator.Delegator;
-import com.coffee.file.FileClass;
 import com.coffee.view.admin.AdminView;
+import com.coffee.view.order.Order;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;

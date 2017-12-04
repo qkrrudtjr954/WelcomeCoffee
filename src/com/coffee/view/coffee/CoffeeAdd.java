@@ -1,7 +1,9 @@
 package com.coffee.view.coffee;
 
+import com.coffee.dao.Coffee.Insert;
 import com.coffee.delegator.Delegator;
 import com.coffee.dto.Coffee;
+import com.coffee.file.FileClass;
 import com.coffee.view.admin.AdminCoffeeList;
 import com.coffee.view.admin.AdminView;
 
@@ -121,19 +123,20 @@ public class CoffeeAdd extends JFrame implements WindowListener, ActionListener 
             String coffeeName = this.name.getText();
             int price = Integer.parseInt(this.price.getText());
             int priceGap = Integer.parseInt(this.priceGap.getText());
+            Insert coffeeInsert = new Insert();
+            boolean result = coffeeInsert.insert(coffeeName, price, priceGap);
 
-            Delegator delegator = Delegator.getInstance();
+            if(result){
+                FileClass fileClass = new FileClass();
+                fileClass.writeCoffeeToFile();
 
-            boolean bool = delegator.getCoffees().stream().anyMatch(coffee -> coffee.getName().equals(coffeeName));
-            if(bool){
-                JOptionPane.showMessageDialog(null, "Coffee already exist");
+                JOptionPane.showMessageDialog(new AdminCoffeeList(), "Add Successfully");
+                this.dispose();
             }else{
-                Coffee coffee = new Coffee(coffeeName, price, priceGap);
-                if(delegator.getCoffees().add(coffee)){
-                    JOptionPane.showMessageDialog(new AdminCoffeeList(), "Add Successfully");
-                    this.dispose();
-                }
+                JOptionPane.showMessageDialog(null, "Coffee already exist");
             }
+
+
         }
 
 

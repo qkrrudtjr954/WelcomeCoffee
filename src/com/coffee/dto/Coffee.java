@@ -5,6 +5,9 @@ public class Coffee {
     private int price;
     private int priceGap;
 
+    public Coffee() {
+    }
+
     public Coffee(String name, int price, int priceGap) {
         this.name = name;
         this.price = price;

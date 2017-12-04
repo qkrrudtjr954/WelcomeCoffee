@@ -3,7 +3,6 @@ package com.coffee.view.admin;
 import com.coffee.delegator.Delegator;
 import com.coffee.dto.Ordered;
 import com.coffee.view.Main;
-import com.coffee.view.Order;
 
 import javax.swing.*;
 import java.awt.*;

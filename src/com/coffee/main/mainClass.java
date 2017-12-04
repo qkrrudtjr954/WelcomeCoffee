@@ -5,10 +5,6 @@ import com.coffee.dto.Coffee;
 import com.coffee.dto.User;
 import com.coffee.file.FileClass;
 import com.coffee.view.Main;
-import com.coffee.view.Menu;
-import com.coffee.view.Order;
-import com.coffee.view.SignUp;
-import com.coffee.view.admin.AdminView;
 
 public class mainClass {
     public static void main(String[] args) {
@@ -22,16 +18,17 @@ public class mainClass {
 
         Delegator.getInstance().getUsers().add(user);
 
-        Delegator.getInstance().getCoffees().add(coffee1);
-        Delegator.getInstance().getCoffees().add(coffee2);
-        Delegator.getInstance().getCoffees().add(coffee3);
-        Delegator.getInstance().getCoffees().add(coffee4);
-
+//        Delegator.getInstance().getCoffees().add(coffee1);
+//        Delegator.getInstance().getCoffees().add(coffee2);
+//        Delegator.getInstance().getCoffees().add(coffee3);
+//        Delegator.getInstance().getCoffees().add(coffee4);
 
         FileClass fileClass = new FileClass();
 
         fileClass.loadUserFromFile();
         fileClass.loadOrderedFromFile();
+        fileClass.loadCoffeeFromFile();
+
 
 
         new Main();

@@ -1,14 +1,13 @@
-package com.coffee.view;
+package com.coffee.view.order;
 
 import com.coffee.delegator.Delegator;
 import com.coffee.dto.Ordered;
+import com.coffee.view.Main;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
-import java.util.List;
 
 public class OrderedList extends JFrame implements WindowListener, ActionListener{
 

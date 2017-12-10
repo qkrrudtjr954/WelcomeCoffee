@@ -1,6 +1,11 @@
 # WelcomeCoffee
 자바 스윙을 이용한 커피 주문 어플리케이션.
 
+## 개발 환경
+- 언어 : java 8
+- 에디터 : eclipse & intelliJ
+- 프레임워크 : java swing
+
 ## 사용법
 로그인을 하고 원하는 커피를 선택할 수 있다.
 1. 사이즈
